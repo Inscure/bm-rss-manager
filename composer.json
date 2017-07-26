@@ -1,0 +1,8 @@
+{
+	"name": "kujak00/bm-rss-manager",
+    "autoload": {
+        "psr-0" : {
+            "Kujak00\\BmRssManager" : "src"
+        }
+    }
+}
