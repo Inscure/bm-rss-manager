@@ -1,5 +1,10 @@
 {
 	"name": "kujak00/bm-rss-manager",
+	"description": "RSS Manager.",
+	"homepage": "https://github.com/kujak00/bm-rss-manager",
+	"require": {
+        "php": ">=7.0"
+    },
     "autoload": {
         "psr-0" : {
             "Kujak00\\BmRssManager" : "src"
