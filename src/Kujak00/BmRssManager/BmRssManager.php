@@ -176,28 +176,45 @@ class BmRssManager
 		}
 	}
 	
-	
+	/**
+	 * Get single entry from data by Id.
+	 * @param type $id
+	 * @return object
+	 */
 	public function getEntry($id)
 	{
-
+		return $this->data->entry[$id];
 	}
 	
-	
-	public function addEntry($title, $link)
+	/**
+	 * Add or set entry to data.
+	 * @param string $title
+	 * @param string $link
+	 * @param bool|int $id
+	 */
+	public function addOrSetEntry($title, $link, $id = false)
 	{
+		$data = new \stdClass();
+		$data->title = $title;
+		$data->link = $link;
 		
+		if (\is_int($id))
+		{
+			$this->data->entry[$id] = $data;
+		}
+		else
+		{
+			$this->data->entry[] = $data;
+		}
 	}
 	
-	
-	public function setEntry($id)
-	{
-		
-	}
-	
-	
+	/**
+	 * Delete entry from data by Id.
+	 * @param int $id
+	 */
 	public function delEntry($id)
 	{
-		
+		\array_splice($this->data->entry, 1, 1);
 	}
 	
 	/**
