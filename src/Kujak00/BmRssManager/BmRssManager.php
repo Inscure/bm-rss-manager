@@ -214,7 +214,7 @@ class BmRssManager
 	 */
 	public function delEntry($id)
 	{
-		\array_splice($this->data->entry, 1, 1);
+		\array_splice($this->data->entry, $id, 1);
 	}
 	
 	/**
