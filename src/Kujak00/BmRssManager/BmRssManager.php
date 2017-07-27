@@ -21,11 +21,24 @@ class BmRssManager
 	 */
 	private $data;
 	
+	/**
+	 * Data file name with saved data.
+	 * @var string
+	 */
+	private $data_file_name = 'bmrssmanager.json';
+	
+	/**
+	 * Data file dir.
+	 * @var string
+	 */
+	private $data_file_dir = __DIR__;
+	
 	
 	
 	public function __construct()
 	{
 		$this->data = new \stdClass();
+		$this->loadData();
 	}
 	
 	/**
@@ -79,7 +92,7 @@ class BmRssManager
 				{
 					$entry_tmp = new \stdClass();
 					$entry_tmp->title = (string)$entry->title;
-					$entry_tmp->id = (string)$entry->id;
+					$entry_tmp->link = (string)$entry->id;
 					
 					$this->data->entry[] = $entry_tmp;
 				}
@@ -90,6 +103,52 @@ class BmRssManager
 		
 		return false;
 	}
+	
+	/**
+	 * Load data from file.
+	 * @return boolean
+	 */
+	public function loadData()
+	{
+		$file = $this->data_file_dir.'/'.$this->data_file_name;
+		
+		if (\file_exists($file))
+		{
+			if ($handle = \fopen($file, 'r'))
+			{
+				$data = \fread($handle, \filesize($file));
+			
+				if ($data)
+				{
+					$this->data = \json_decode($data);
+				
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Save data to file.
+	 * @return boolean
+	 */
+	public function saveData()
+	{
+		$file = $this->data_file_dir.'/'.$this->data_file_name;
+		
+		if ($handle = \fopen($file, 'w'))
+		{
+			if (\fwrite($handle, \json_encode($this->data)))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	
 	/**
 	 * Show data from Rss.
@@ -106,7 +165,7 @@ class BmRssManager
 
 			foreach ($this->data->entry as $entry)
 			{
-				echo '<li><a href="'.$entry->id.'" title="'.$entry->title.'">'.$entry->title.'</a></li>';
+				echo '<li><a href="'.$entry->link.'" title="'.$entry->title.'">'.$entry->title.'</a></li>';
 			}
 
 			echo '</ul>';
@@ -115,6 +174,30 @@ class BmRssManager
 		{
 			echo '<h3>Brak danych</h3>';
 		}
+	}
+	
+	
+	public function getEntry($id)
+	{
+
+	}
+	
+	
+	public function addEntry($title, $link)
+	{
+		
+	}
+	
+	
+	public function setEntry($id)
+	{
+		
+	}
+	
+	
+	public function delEntry($id)
+	{
+		
 	}
 	
 	/**
